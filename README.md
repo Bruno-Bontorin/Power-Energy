@@ -1,6 +1,6 @@
 # Front-end do site Power-Energy
 
-Este projeto foi gerado com [Angular CLI](https://github.com/angular/angular-cli) na versão 12.2.5.
+Este projeto foi gerado com [Angular CLI](https://github.com/angular/angular-cli) versão 12.2.5.
 
 ## Servidor de desenvolvimento
 
