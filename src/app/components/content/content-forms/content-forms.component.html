@@ -30,13 +30,6 @@
 
   <form class="example-form">
     <mat-form-field class="example-full-width" appearance="fill">
-      <mat-label>Amperagem</mat-label>
-      <input matInput placeholder="Amperagem(Amperes)" [(ngModel)]="gadgets_obj1.amperage" name="amperage" />
-    </mat-form-field>
-  </form>
-
-  <form class="example-form">
-    <mat-form-field class="example-full-width" appearance="fill">
       <mat-label>Quantidade</mat-label>
       <input matInput placeholder="Quantidade" [(ngModel)]="gadgets_obj1.amount" name="amount" />
     </mat-form-field>
@@ -57,7 +50,15 @@
       </mat-option>
     </mat-select>
   </mat-form-field>
+
+  <form class="example-form">
+    <mat-form-field class="example-full-width" appearance="fill">
+      <mat-label>Amperagem</mat-label>
+      <input matInput placeholder="Amperagem(Amperes)" [(ngModel)]="gadgets_obj1.amperage" name="amperage" />
+    </mat-form-field>
+  </form>
 </div>
+
 
 <!-- Cálculo -->
 <mat-card style="margin: 25px">
@@ -69,4 +70,6 @@
   </mat-card-actions>
 </mat-card>
 
-<app-registration-table #registrationTable></app-registration-table>
+<div class="registration-table">
+  <app-registration-table></app-registration-table>
+</div>
