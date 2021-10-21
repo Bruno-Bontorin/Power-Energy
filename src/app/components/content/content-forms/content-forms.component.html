@@ -65,50 +65,8 @@
   <mat-card-subtitle>Resultado: {{ energy | currency: 'BRL':true}}</mat-card-subtitle>
   <mat-card-actions>
     <button mat-raised-button color="primary" (click)="calc()">Calcular</button>
+    <!-- <button mat-raised-button color="primary" (click)="refreshTable()">Atualizar</button> -->
   </mat-card-actions>
 </mat-card>
 
-<table mat-table [dataSource]="gadgets_temp_obj" class="mat-elevation-z8">
-
-  <!--- Note that these columns can be defined in any order.
-        The actual rendered columns are set as a property on the row definition" -->
-
-  <!-- ID Column -->
-  <ng-container matColumnDef="id">
-    <th mat-header-cell *matHeaderCellDef> Id </th>
-    <td mat-cell *matCellDef="let obj"> {{obj.id}} </td>
-  </ng-container>
-
-  <!-- Name Column -->
-  <ng-container matColumnDef="name">
-    <th mat-header-cell *matHeaderCellDef> Name </th>
-    <td mat-cell *matCellDef="let obj"> {{obj.name}} </td>
-  </ng-container>
-
-  <!-- Amount Column -->
-  <ng-container matColumnDef="amount">
-    <th mat-header-cell *matHeaderCellDef> Amount </th>
-    <td mat-cell *matCellDef="let obj"> {{obj.amount}} </td>
-  </ng-container>
-
-  <!-- Time Column -->
-  <ng-container matColumnDef="time">
-    <th mat-header-cell *matHeaderCellDef> Time </th>
-    <td mat-cell *matCellDef="let obj"> {{obj.time}} </td>
-  </ng-container>
-
-  <!-- Symbol Column -->
-  <ng-container matColumnDef="potency">
-    <th mat-header-cell *matHeaderCellDef> Potency </th>
-    <td mat-cell *matCellDef="let obj"> {{obj.potency}} </td>
-  </ng-container>
-
-  <!-- Symbol Column -->
-  <ng-container matColumnDef="amperage">
-    <th mat-header-cell *matHeaderCellDef> Amperage </th>
-    <td mat-cell *matCellDef="let obj"> {{obj.amperage}} </td>
-  </ng-container>
-
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-</table>
+<app-registration-table #registrationTable></app-registration-table>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { async, Observable, of, timer } from 'rxjs';
 import {
@@ -13,7 +13,7 @@ import { GadgetsTemp } from 'src/app/model/gadgets-temp.model';
 import { Voltage } from 'src/app/model/voltage.model';
 import { VoltageService } from 'src/app/services/voltage.service';
 import { GadgetsService } from 'src/app/services/gadgets.service';
-import { GadgetsTempService } from 'src/app/services/gadgets-temp.service';
+import { RegistrationTableComponent } from 'src/app/components/content/registration-table/registration-table.component';
 
 @Component({
   selector: 'app-content-forms',
@@ -21,6 +21,9 @@ import { GadgetsTempService } from 'src/app/services/gadgets-temp.service';
   styleUrls: ['content-forms.component.scss'],
 })
 export class ContentComponentForms implements OnInit {
+  @ViewChild(RegistrationTableComponent, { static: false })
+  registrationTable!: RegistrationTableComponent | undefined;
+
   title: string = 'Calcule o seu gasto elétrico através dos campos abaixo';
 
   // Variáveis globais
@@ -53,7 +56,6 @@ export class ContentComponentForms implements OnInit {
 
   constructor(
     private gadgetsService: GadgetsService,
-    private gadgetsTempService: GadgetsTempService,
     private voltageService: VoltageService
   ) {}
 
@@ -62,12 +64,6 @@ export class ContentComponentForms implements OnInit {
     this.gadgetsService.read().subscribe((gadgets) => {
       this.gadgets_obj = gadgets;
       console.log(gadgets);
-    });
-
-    // Leitura geral do banco GadgetsTemp
-    this.gadgetsTempService.read().subscribe((gadgets_temp) => {
-      this.gadgets_temp_obj = gadgets_temp;
-      console.log(gadgets_temp);
     });
 
     // Leitura para Voltage
@@ -114,6 +110,15 @@ export class ContentComponentForms implements OnInit {
   //   }
   // }
 
+  refreshTableForms() {
+    console.log(`Teste`);
+    this.registrationTable?.refreshTable();
+  }
+
+  // createObjTableForms() {
+  //   this.registrationTable?.createObjTable();
+  // }
+
   calc(): void {
     let energy: number = 0;
     energy =
@@ -125,6 +130,7 @@ export class ContentComponentForms implements OnInit {
       this.energy = energy;
       console.log(`Energia 2 R$ ${this.energy}`);
     }
+    this.refreshTableForms();
     console.log(`Energia R$ ${energy}`);
   }
 

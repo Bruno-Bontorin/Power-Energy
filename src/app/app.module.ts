@@ -19,6 +19,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 
 // Backend
 import { HttpClientModule } from '@angular/common/http';
+import { RegistrationTableComponent } from './components/content/registration-table/registration-table.component';
 
 registerLocaleData(localePt);
 
@@ -28,6 +29,7 @@ registerLocaleData(localePt);
     HeaderComponent,
     ContentReadComponent,
     ContentComponentForms,
+    RegistrationTableComponent,
   ],
   imports: [
     BrowserModule,
