@@ -6,20 +6,22 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 
 // Componentes
-import { AppComponent } from './app.component';
-import { HeaderComponent } from './components/template/header/header.component';
-import { ContentReadComponent } from './components/content/content-read/content-read.component';
-import { ContentComponentForms } from './components/content/content-forms/content-forms.component';
+import { AppComponent } from 'src/app/app.component';
+import { HeaderComponent } from 'src/app/components/template/header/header.component';
+import { ContentComponentForm } from 'src/app/components/content/content-form/content-form.component';
+import { ContentTableComponent } from './components/content/content-table/content-table.component';
 
 // Material imports
-import { MaterialModule } from './components/material-module';
+import { MaterialModule } from 'src/app/components/material-module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
 
 // Backend
 import { HttpClientModule } from '@angular/common/http';
-import { RegistrationTableComponent } from './components/content/registration-table/registration-table.component';
 
 registerLocaleData(localePt);
 
@@ -27,9 +29,8 @@ registerLocaleData(localePt);
   declarations: [
     AppComponent,
     HeaderComponent,
-    ContentReadComponent,
-    ContentComponentForms,
-    RegistrationTableComponent,
+    ContentComponentForm,
+    ContentTableComponent,
   ],
   imports: [
     BrowserModule,
@@ -41,6 +42,9 @@ registerLocaleData(localePt);
     HttpClientModule,
     MatFormFieldModule,
     MatInputModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
   ],
   entryComponents: [HeaderComponent],
   providers: [

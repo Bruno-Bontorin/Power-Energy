@@ -13,16 +13,16 @@ import { GadgetsTemp } from 'src/app/model/gadgets-temp.model';
 import { Voltage } from 'src/app/model/voltage.model';
 import { VoltageService } from 'src/app/services/voltage.service';
 import { GadgetsService } from 'src/app/services/gadgets.service';
-import { RegistrationTableComponent } from 'src/app/components/content/registration-table/registration-table.component';
+import { ContentTableComponent } from '../content-table/content-table.component';
 
 @Component({
-  selector: 'app-content-forms',
-  templateUrl: 'content-forms.component.html',
-  styleUrls: ['content-forms.component.scss'],
+  selector: 'app-content-form',
+  templateUrl: 'content-form.component.html',
+  styleUrls: ['content-form.component.scss'],
 })
-export class ContentComponentForms implements OnInit {
-  @ViewChild(RegistrationTableComponent, { static: false })
-  registrationTable!: RegistrationTableComponent | undefined;
+export class ContentComponentForm implements OnInit {
+  @ViewChild(ContentTableComponent, { static: false })
+  contentTable!: ContentTableComponent;
 
   title: string = 'Calcule o seu gasto elétrico através dos campos abaixo';
 
@@ -63,12 +63,14 @@ export class ContentComponentForms implements OnInit {
     // Leitura geral do banco Gadgets
     this.gadgetsService.read().subscribe((gadgets) => {
       this.gadgets_obj = gadgets;
+      console.log(`ComponentForm - Gadgets`);
       console.log(gadgets);
     });
 
     // Leitura para Voltage
     this.voltageService.read().subscribe((voltage) => {
       this.voltage_obj = voltage;
+      console.log(`ComponentForm - Voltage`);
       console.log(voltage);
     });
 
@@ -110,9 +112,8 @@ export class ContentComponentForms implements OnInit {
   //   }
   // }
 
-  refreshTableForms() {
-    console.log(`Teste`);
-    this.registrationTable?.refreshTable();
+  refreshTableForm() {
+    this.contentTable.readApiForNewObjs();
   }
 
   // createObjTableForms() {
@@ -130,7 +131,7 @@ export class ContentComponentForms implements OnInit {
       this.energy = energy;
       console.log(`Energia 2 R$ ${this.energy}`);
     }
-    this.refreshTableForms();
+    this.refreshTableForm();
     console.log(`Energia R$ ${energy}`);
   }
 

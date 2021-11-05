@@ -1,0 +1,16 @@
+.max-width {
+  margin: 0px 25px;
+  width: calc(100% - 50px);
+}
+
+.full-width {
+  width: 100%;
+}
+
+table th:nth-child(1) {
+  width: 5%;
+}
+
+table th {
+  width: calc(100% / 5);
+}
