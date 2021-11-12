@@ -8,7 +8,10 @@
     <div class="box-suggestions"></div>
     <mat-form-field class="example-full-width" appearance="fill" style="width: 100%">
       <mat-label>Aparelho</mat-label>
-      <input type="text" placeholder="Aparelho" aria-label="Aparelho" matInput [formControl]="myControl" [matAutocomplete]="auto" />
+      <input type="text" id="input1" #input placeholder="Aparelho" aria-label="Aparelho" [formControl]="gadgetsFormControl" [errorStateMatcher]="matcher" matInput (blur)="testForm()" [(ngModel)]="gadgets_obj1.name" [formControl]="myControl" [matAutocomplete]="auto" required />
+      <mat-error id="demo">
+        <strong>Obrigatório.</strong>
+      </mat-error>
       <mat-autocomplete #auto="matAutocomplete">
         <mat-option *ngFor="let obj of filteredOptions | async" [value]="obj.name" (click)="link(obj.id)">
           <a routerLink="/gadgets/obj/{{ obj.id }}">
@@ -20,41 +23,69 @@
     </mat-form-field>
   </form>
 
+
   <!-- Campos -->
   <form class="example-form">
     <mat-form-field class="example-full-width" appearance="fill">
       <mat-label>Tempo</mat-label>
-      <input matInput placeholder="Tempo (Minutos)" [(ngModel)]="gadgets_obj1.time" name="time" />
+      <input type="text" matInput placeholder="Tempo (Minutos)" [formControl]="timeFormControl" [errorStateMatcher]="matcher" [(ngModel)]="gadgets_obj1.time" name="time" id="time" required />
+      <mat-error *ngIf="timeFormControl.errors && !timeFormControl.hasError('required')">
+        Informação incorreta!
+      </mat-error>
+      <mat-error *ngIf="!timeFormControl.valid && timeFormControl.touched">
+        <strong>Obrigatório.</strong>
+      </mat-error>
     </mat-form-field>
   </form>
 
   <form class="example-form">
     <mat-form-field class="example-full-width" appearance="fill">
       <mat-label>Quantidade</mat-label>
-      <input matInput placeholder="Quantidade" [(ngModel)]="gadgets_obj1.amount" name="amount" />
+      <input type="text" matInput placeholder="Quantidade" [formControl]="amountFormControl" [errorStateMatcher]="matcher" [(ngModel)]="gadgets_obj1.amount" name="amount" required />
+      <mat-error *ngIf="amountFormControl.errors && !amountFormControl.hasError('required')">
+        Informação incorreta!
+      </mat-error>
+      <mat-error *ngIf="!amountFormControl.valid && amountFormControl.touched">
+        <strong>Obrigatório.</strong>
+      </mat-error>
     </mat-form-field>
   </form>
 
   <form class="example-form">
     <mat-form-field class="example-full-width" appearance="fill">
       <mat-label>Potência</mat-label>
-      <input matInput placeholder="Potência (Wats)" [(ngModel)]="gadgets_obj1.potency" name="potency" />
+      <input matInput placeholder="Potência (Wats)" [formControl]="potencyFormControl" [errorStateMatcher]="matcher" [(ngModel)]="gadgets_obj1.potency" name="potency" required />
+      <mat-error *ngIf="potencyFormControl.errors && !potencyFormControl.hasError('required')">
+        Informação incorreta!
+      </mat-error>
+      <mat-error *ngIf="!potencyFormControl.valid && potencyFormControl.touched">
+        <strong>Obrigatório.</strong>
+      </mat-error>
     </mat-form-field>
   </form>
 
   <mat-form-field appearance="fill">
     <mat-label>Voltagem</mat-label>
-    <mat-select>
+    <mat-select [formControl]="voltageFormControl" [errorStateMatcher]="matcher" required>
       <mat-option *ngFor="let obj of voltage_obj" [value]="obj.ddp">
         {{ obj.ddp }}
       </mat-option>
     </mat-select>
+    <mat-error id="demo">
+      <strong>Obrigatório.</strong>
+    </mat-error>
   </mat-form-field>
 
   <form class="example-form">
     <mat-form-field class="example-full-width" appearance="fill">
       <mat-label>Amperagem</mat-label>
-      <input matInput placeholder="Amperagem(Amperes)" [(ngModel)]="gadgets_obj1.amperage" name="amperage" />
+      <input matInput placeholder="Amperagem(Amperes)" [formControl]="amperageFormControl" [errorStateMatcher]="matcher" [(ngModel)]="gadgets_obj1.amperage" name="amperage" />
+      <mat-error *ngIf="amperageFormControl.errors && !amperageFormControl.hasError('required')">
+        Informação incorreta!
+      </mat-error>
+      <mat-error *ngIf="!amperageFormControl.valid && amperageFormControl.touched">
+        <strong>Obrigatório.</strong>
+      </mat-error>
     </mat-form-field>
   </form>
 </div>
@@ -65,7 +96,7 @@
   <mat-card-title>Gasto de Energia Elétrica</mat-card-title>
   <mat-card-subtitle>Resultado: {{ energy | currency: 'BRL':true}}</mat-card-subtitle>
   <mat-card-actions>
-    <button mat-raised-button color="primary" (click)="calc()">Calcular</button>
+    <button mat-raised-button color="primary" (click)="calc()">Adicionar objeto</button>
     <!-- <button mat-raised-button color="primary" (click)="refreshTable()">Atualizar</button> -->
   </mat-card-actions>
 </mat-card>

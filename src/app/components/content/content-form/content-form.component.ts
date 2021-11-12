@@ -1,5 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import {
+  FormControl,
+  FormGroupDirective,
+  NgForm,
+  Validators,
+} from '@angular/forms';
 import { async, Observable, of, timer } from 'rxjs';
 import {
   debounceTime,
@@ -14,7 +19,22 @@ import { Voltage } from 'src/app/model/voltage.model';
 import { VoltageService } from 'src/app/services/voltage.service';
 import { GadgetsService } from 'src/app/services/gadgets.service';
 import { ContentTableComponent } from '../content-table/content-table.component';
+import { ErrorStateMatcher } from '@angular/material/core';
 
+/** Error when invalid control is dirty, touched, or submitted. */
+export class MyErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(
+    control: FormControl | null,
+    form: FormGroupDirective | NgForm | null
+  ): boolean {
+    const isSubmitted = form && form.submitted;
+    return !!(
+      control &&
+      control.invalid &&
+      (control.dirty || control.touched || isSubmitted)
+    );
+  }
+}
 @Component({
   selector: 'app-content-form',
   templateUrl: 'content-form.component.html',
@@ -54,11 +74,65 @@ export class ContentComponentForm implements OnInit {
     'amperage',
   ];
 
+  gadgetsFormControl = new FormControl('', {
+    updateOn: 'blur',
+    validators: [Validators.required],
+  });
+
+  timeFormControl = new FormControl('', [
+    Validators.required,
+    Validators.pattern('^[0-9]*d*$'),
+    Validators.min(1),
+  ]);
+
+  amountFormControl = new FormControl('', [
+    Validators.required,
+    Validators.pattern('^[0-9]*d*$'),
+    Validators.min(1),
+  ]);
+
+  potencyFormControl = new FormControl('', [
+    Validators.required,
+    Validators.pattern('^[0-9]*d*$'),
+    Validators.min(1),
+  ]);
+
+  voltageFormControl = new FormControl('', [
+    Validators.required,
+    Validators.pattern('^[0-9 V]*d*$'),
+    Validators.min(1),
+  ]);
+
+  amperageFormControl = new FormControl('', [
+    Validators.required,
+    Validators.pattern('^[0-9]*d*$'),
+    Validators.min(1),
+  ]);
+
+  matcher = new MyErrorStateMatcher();
+
   constructor(
     private gadgetsService: GadgetsService,
     private voltageService: VoltageService
   ) {}
 
+  // <<----=============================#####=============================---->>
+
+  // Teste do campo Aparelho
+  testForm(): void {
+    let inputGadgets = document.getElementById('input1') as HTMLInputElement;
+    if (inputGadgets.value == ' ') {
+      console.log(`JUREMA: ${inputGadgets.value}`);
+      inputGadgets.value = ' ';
+      // inputGadgets.setAttribute('disabled', 'disabled');
+    } else {
+      console.log(`JUREMA: ${inputGadgets.checkValidity()}`);
+    }
+  }
+
+  // <<----=============================#####=============================---->>
+
+  // Inicialização
   ngOnInit() {
     // Leitura geral do banco Gadgets
     this.gadgetsService.read().subscribe((gadgets) => {
@@ -74,12 +148,6 @@ export class ContentComponentForm implements OnInit {
       console.log(voltage);
     });
 
-    // Leitura por ID
-    // const id = +this.route.snapshot.paramMap.get('id')!;
-    // this.gadgetsService.readById(id).subscribe((obj) => {
-    //   this.gadgets_obj1 = obj;
-    // });
-
     // Filtro por letra digitada
     this.filteredOptions = this.myControl.valueChanges.pipe(
       startWith(''),
@@ -87,6 +155,7 @@ export class ContentComponentForm implements OnInit {
     );
   }
 
+  // Leitura de objs default (digitados)
   link(id: number | undefined) {
     if (id != undefined) {
       return this.gadgetsService.readById(id).subscribe((obj) => {
@@ -97,29 +166,14 @@ export class ContentComponentForm implements OnInit {
     }
   }
 
-  // calc(id: number | undefined) {
-  //   if (id != undefined) {
-  //     let energy: number = 0;
-  //     this.gadgetsService.readById(id).subscribe((obj) => {
-  //       this.gadgets_obj1 = obj;
-  //       energy =
-  //         ((this.gadgets_obj1.potency! * (this.gadgets_obj1.time! / 60)) /
-  //           1000) *
-  //         0.142;
-  //       this.energy = energy;
-  //       return console.log(`Energia R$ ${energy}`);
-  //     });
-  //   }
-  // }
+  // <<----=============================#####=============================---->>
 
+  // Atualiza temp table
   refreshTableForm() {
     this.contentTable.readApiForNewObjs();
   }
 
-  // createObjTableForms() {
-  //   this.registrationTable?.createObjTable();
-  // }
-
+  // Realiza cálculo
   calc(): void {
     let energy: number = 0;
     energy =
@@ -135,12 +189,9 @@ export class ContentComponentForm implements OnInit {
     console.log(`Energia R$ ${energy}`);
   }
 
-  // public getObj(id: number): Gadgets[] {
-  //   const mocked: Gadgets[] = this.gadgetsService.readById(id);
-  //   return mocked;
-  // }
+  // <<----=============================#####=============================---->>
 
-  // Funções privadas
+  // Métodos privados
   private _filter(name: string): Gadgets[] {
     const filterValue = name.toLowerCase();
 
@@ -148,14 +199,4 @@ export class ContentComponentForm implements OnInit {
       (obj) => obj.name.toLowerCase().indexOf(filterValue) === 0
     );
   }
-
-  //Métodos
-  // refresh(id: number | undefined): Promise<void> {
-  //   if (id === undefined) {
-  //     console.log(`Undefined: ${id}`);
-  //     return this.gadgetsService
-  //       .readById(0)
-  //       .forEach((obj) => (this.gadgets_obj = obj));
-  //   }
-  // }
 }

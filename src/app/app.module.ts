@@ -23,6 +23,12 @@ import { MatSortModule } from '@angular/material/sort';
 // Backend
 import { HttpClientModule } from '@angular/common/http';
 
+// FormControl
+import {
+  ErrorStateMatcher,
+  ShowOnDirtyErrorStateMatcher,
+} from '@angular/material/core';
+
 registerLocaleData(localePt);
 
 @NgModule({
@@ -51,6 +57,10 @@ registerLocaleData(localePt);
     {
       provide: LOCALE_ID,
       useValue: 'pt-BR',
+    },
+    {
+      provide: ErrorStateMatcher,
+      useClass: ShowOnDirtyErrorStateMatcher,
     },
   ],
   bootstrap: [AppComponent],
