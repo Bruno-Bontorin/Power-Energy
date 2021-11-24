@@ -78,6 +78,7 @@ export class DialogDeleteComponent implements OnInit {
 @Component({
   selector: 'app-dialog-delete-content',
   templateUrl: 'dialog-delete-content.component.html',
+  styleUrls: ['dialog-delete-content.component.scss'],
 })
 export class DialogDeleteContentComponent extends ContentComponentForm {
   constructor(
