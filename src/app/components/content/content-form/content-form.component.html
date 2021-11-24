@@ -8,8 +8,8 @@
     <div class="box-suggestions"></div>
     <mat-form-field class="example-full-width" appearance="fill" style="width: 100%">
       <mat-label>Aparelho</mat-label>
-      <input type="text" id="input1" #input placeholder="Aparelho" aria-label="Aparelho" [formControl]="gadgetsFormControl" [errorStateMatcher]="matcher" matInput (blur)="testForm()" [(ngModel)]="gadgets_obj1.name" [formControl]="myControl" [matAutocomplete]="auto" required />
-      <mat-error id="demo">
+      <input matInput type="text" #input name="gadgets" required [formControl]="gadgetsFormControl" [errorStateMatcher]="matcher" [(ngModel)]="gadgets_obj1.name" [matAutocomplete]="auto" placeholder="Aparelho" aria-label="Aparelho" />
+      <mat-error>
         <strong>Obrigatório.</strong>
       </mat-error>
       <mat-autocomplete #auto="matAutocomplete">
@@ -23,67 +23,66 @@
     </mat-form-field>
   </form>
 
-
   <!-- Campos -->
   <form class="example-form">
-    <mat-form-field class="example-full-width" appearance="fill">
+    <mat-form-field class="example-full-width" [formGroup]="form" appearance="fill">
       <mat-label>Tempo</mat-label>
-      <input type="text" matInput placeholder="Tempo (Minutos)" [formControl]="timeFormControl" [errorStateMatcher]="matcher" [(ngModel)]="gadgets_obj1.time" name="time" id="time" required />
-      <mat-error *ngIf="timeFormControl.errors && !timeFormControl.hasError('required')">
+      <input matInput type="text" name="time" required formControlName="timeField" [errorStateMatcher]="matcher" [(ngModel)]="gadgets_obj1.time" mask="00:00:00" placeholder="Tempo (Minutos)" aria-label="Tempo (Minutos)" />
+      <mat-error *ngIf="time?.errors && !time?.errors?.required">
         Informação incorreta!
       </mat-error>
-      <mat-error *ngIf="!timeFormControl.valid && timeFormControl.touched">
+      <mat-error *ngIf="time?.errors?.required">
         <strong>Obrigatório.</strong>
       </mat-error>
     </mat-form-field>
   </form>
 
   <form class="example-form">
-    <mat-form-field class="example-full-width" appearance="fill">
+    <mat-form-field class="example-full-width" [formGroup]="form" appearance="fill">
       <mat-label>Quantidade</mat-label>
-      <input type="text" matInput placeholder="Quantidade" [formControl]="amountFormControl" [errorStateMatcher]="matcher" [(ngModel)]="gadgets_obj1.amount" name="amount" required />
-      <mat-error *ngIf="amountFormControl.errors && !amountFormControl.hasError('required')">
+      <input matInput type="text" name="amount" required formControlName="amountField" [errorStateMatcher]="matcher" [(ngModel)]="gadgets_obj1.amount" placeholder="Quantidade" aria-label="Quantidade" />
+      <mat-error *ngIf="amount?.errors && !amount?.errors?.required">
         Informação incorreta!
       </mat-error>
-      <mat-error *ngIf="!amountFormControl.valid && amountFormControl.touched">
+      <mat-error *ngIf="amount?.errors?.required">
         <strong>Obrigatório.</strong>
       </mat-error>
     </mat-form-field>
   </form>
 
   <form class="example-form">
-    <mat-form-field class="example-full-width" appearance="fill">
+    <mat-form-field class="example-full-width" [formGroup]="form" appearance="fill">
       <mat-label>Potência</mat-label>
-      <input matInput placeholder="Potência (Wats)" [formControl]="potencyFormControl" [errorStateMatcher]="matcher" [(ngModel)]="gadgets_obj1.potency" name="potency" required />
-      <mat-error *ngIf="potencyFormControl.errors && !potencyFormControl.hasError('required')">
+      <input matInput type="text" name="potency" required formControlName="potencyField" [errorStateMatcher]="matcher" [(ngModel)]="gadgets_obj1.potency" (blur)="verifyPotencyAndDisableFields()" placeholder="Potência (Wats)" aria-label="Potência (Wats)" />
+      <mat-error *ngIf="potency?.errors && !potency?.errors?.required">
         Informação incorreta!
       </mat-error>
-      <mat-error *ngIf="!potencyFormControl.valid && potencyFormControl.touched">
+      <mat-error *ngIf="potency?.errors?.required">
         <strong>Obrigatório.</strong>
       </mat-error>
     </mat-form-field>
   </form>
 
-  <mat-form-field appearance="fill">
+  <mat-form-field [formGroup]="form" appearance="fill">
     <mat-label>Voltagem</mat-label>
-    <mat-select [formControl]="voltageFormControl" [errorStateMatcher]="matcher" required>
-      <mat-option *ngFor="let obj of voltage_obj" [value]="obj.ddp">
+    <mat-select name="voltage" required formControlName="voltageField" [errorStateMatcher]="matcher" [(ngModel)]="gadgets_obj1.voltage">
+      <mat-option *ngFor="let obj of voltage_obj" [value]="obj.id" (click)="verifyVoltageOrAmperageAndDisableFields()">
         {{ obj.ddp }}
       </mat-option>
     </mat-select>
-    <mat-error id="demo">
+    <mat-error>
       <strong>Obrigatório.</strong>
     </mat-error>
   </mat-form-field>
 
   <form class="example-form">
-    <mat-form-field class="example-full-width" appearance="fill">
-      <mat-label>Amperagem</mat-label>
-      <input matInput placeholder="Amperagem(Amperes)" [formControl]="amperageFormControl" [errorStateMatcher]="matcher" [(ngModel)]="gadgets_obj1.amperage" name="amperage" />
-      <mat-error *ngIf="amperageFormControl.errors && !amperageFormControl.hasError('required')">
+    <mat-form-field class="example-full-width" [formGroup]="form" appearance="fill">
+      <mat-label>Corrente</mat-label>
+      <input matInput type="text" name="amperage" required formControlName="amperageField" [errorStateMatcher]="matcher" [(ngModel)]="gadgets_obj1.amperage" placeholder="Corrente" aria-label="Corrente" (blur)="verifyVoltageOrAmperageAndDisableFields()" />
+      <mat-error *ngIf="amperage?.errors && !amperage?.errors?.required">
         Informação incorreta!
       </mat-error>
-      <mat-error *ngIf="!amperageFormControl.valid && amperageFormControl.touched">
+      <mat-error *ngIf="amperage?.errors?.required">
         <strong>Obrigatório.</strong>
       </mat-error>
     </mat-form-field>
@@ -94,9 +93,9 @@
 <!-- Cálculo -->
 <mat-card style="margin: 25px">
   <mat-card-title>Gasto de Energia Elétrica</mat-card-title>
-  <mat-card-subtitle>Resultado: {{ energy | currency: 'BRL':true}}</mat-card-subtitle>
+  <mat-card-subtitle>Resultado: {{ gadgets_obj1.price | currency: 'BRL':true}}</mat-card-subtitle>
   <mat-card-actions>
-    <button mat-raised-button color="primary" (click)="calc()">Adicionar objeto</button>
+    <button mat-raised-button color="primary" [disabled]="isDisabled()" (click)="createObjInTempTable()">Adicionar objeto</button>
     <!-- <button mat-raised-button color="primary" (click)="refreshTable()">Atualizar</button> -->
   </mat-card-actions>
 </mat-card>

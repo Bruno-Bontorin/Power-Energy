@@ -1,10 +1,17 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, Pipe, PipeTransform, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTable } from '@angular/material/table';
 import { GadgetsTemp } from 'src/app/model/gadgets-temp.model';
 import { GadgetsTempService } from 'src/app/services/gadgets-temp.service';
 import { ContentTableDataSource } from './content-table-datasource';
+
+@Pipe({ name: 'maskVoltage' })
+export class MaskVoltage implements PipeTransform {
+  transform(value: number, exponent = 1): number {
+    return value == 1 ? 127 : 220;
+  }
+}
 
 @Component({
   selector: 'app-content-table',
@@ -17,13 +24,43 @@ export class ContentTableComponent implements AfterViewInit {
   @ViewChild(MatTable) table!: MatTable<GadgetsTemp>;
   dataSource: ContentTableDataSource;
 
-  /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['id', 'name', 'amount', 'time', 'potency', 'amperage'];
+  public sendIdForTempTable: number = 0;
+  energy: number = 0;
+
+  // Table
+  displayedColumns = [
+    'id',
+    'name',
+    'time',
+    'amount',
+    'potency',
+    'voltage',
+    'amperage',
+    'energy',
+    'price',
+    'action',
+  ];
 
   gadgets_temp: GadgetsTemp[] = [];
+  gadgets_custom: GadgetsTemp = {
+    name: '',
+    time: null,
+    amount: null,
+    potency: null,
+    voltage: null,
+    amperage: null,
+    energy: null,
+    price: null,
+  };
 
-  constructor(private gadgetsTempService: GadgetsTempService) {
+  constructor(public gadgetsTempService: GadgetsTempService) {
     this.dataSource = new ContentTableDataSource(gadgetsTempService);
+  }
+
+  public getIdObj(id: number) {
+    this.gadgetsTempService.getIdObj(id);
+    this.sendIdForTempTable = this.gadgetsTempService.getIdObj(id);
+    console.log(`${this.sendIdForTempTable} -------->>>>>>>>>>>>>>> ID ID ID ID IDS`);
   }
 
   ngAfterViewInit(): void {
@@ -35,6 +72,8 @@ export class ContentTableComponent implements AfterViewInit {
   public refreshTable(): void {
     this.paginator._changePageSize(this.paginator.pageSize);
   }
+
+  public readByIdObj() {}
 
   public readApiForNewObjs(): void {
     this.gadgetsTempService.read().subscribe((data) => {

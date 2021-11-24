@@ -61,7 +61,7 @@ export class GadgetsService {
   }
 
   // Realiza a leitura do banco de dados
-  delete(id: string): Observable<Gadgets> {
+  delete(id: number): Observable<Gadgets> {
     const url = `${this.baseUrl}/${id}`;
     return this.http.delete<Gadgets>(url).pipe(
       map((obj) => obj),

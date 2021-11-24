@@ -19,15 +19,18 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
+import { MaskVoltage } from './components/content/content-table/content-table.component';
+
+import {
+  DialogDeleteComponent,
+  DialogDeleteContentComponent,
+} from './components/dialogs/dialog-delete/dialog-delete.component';
 
 // Backend
 import { HttpClientModule } from '@angular/common/http';
 
 // FormControl
-import {
-  ErrorStateMatcher,
-  ShowOnDirtyErrorStateMatcher,
-} from '@angular/material/core';
+import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/material/core';
 
 registerLocaleData(localePt);
 
@@ -37,6 +40,9 @@ registerLocaleData(localePt);
     HeaderComponent,
     ContentComponentForm,
     ContentTableComponent,
+    MaskVoltage,
+    DialogDeleteComponent,
+    DialogDeleteContentComponent,
   ],
   imports: [
     BrowserModule,

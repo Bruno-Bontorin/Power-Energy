@@ -31,6 +31,15 @@ export class VoltageService {
     );
   }
 
+  // Faz a leitura por meio do Id do produto
+  readById(id: number): Observable<Voltage> {
+    const url = `${this.baseUrl}/${id}`;
+    return this.http.get<Voltage>(url).pipe(
+      map((obj) => obj),
+      catchError((e) => this.errorHandler(e))
+    );
+  }
+
   // Verifica se tem erro.
   errorHandler(e: any): Observable<any> {
     this.showMessage('Ocorreu um erro', false);

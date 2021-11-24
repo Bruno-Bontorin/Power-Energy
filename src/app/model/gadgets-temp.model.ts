@@ -1,9 +1,11 @@
 export interface GadgetsTemp {
   id?: number;
   name: string;
-  amount: number | null;
   time: number | null;
+  amount: number | null;
   potency: number | null;
+  voltage: number | null;
   amperage: number | null;
-  voltage: string;
+  energy: number | null;
+  price: number | null;
 }
