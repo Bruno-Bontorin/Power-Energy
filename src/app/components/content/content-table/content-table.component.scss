@@ -13,17 +13,17 @@ table th:nth-child(1) {
 
 table th {
   text-align: center;
-  width: calc(100% / 9);
-}
-
-.edit {
-  color: rgb(59, 130, 8);
-}
-
-.edit i {
-  margin-right: 10px;
+  width: calc(100% / 10);
 }
 
 table td:last-child {
   text-align: center;
+}
+
+.refresh {
+  color: #2959c2;
+}
+
+.refresh i {
+  margin-left: 10px;
 }
