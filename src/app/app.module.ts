@@ -31,6 +31,11 @@ import { HttpClientModule } from '@angular/common/http';
 
 // FormControl
 import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/material/core';
+import {
+  DialogEditComponent,
+  DialogEditContentComponent,
+} from './components/dialogs/dialog-edit/dialog-edit.component';
+import { ContentPyshicalComponent } from './components/content/content-pyshical/content-pyshical.component';
 
 registerLocaleData(localePt);
 
@@ -43,6 +48,9 @@ registerLocaleData(localePt);
     MaskVoltage,
     DialogDeleteComponent,
     DialogDeleteContentComponent,
+    DialogEditComponent,
+    DialogEditContentComponent,
+    ContentPyshicalComponent,
   ],
   imports: [
     BrowserModule,

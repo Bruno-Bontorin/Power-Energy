@@ -1,6 +1,6 @@
 import { GadgetsTemp } from 'src/app/model/gadgets-temp.model';
 import { catchError, map } from 'rxjs/operators';
-import { Injectable, ViewChild } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { HttpClient } from '@angular/common/http';
 import { EMPTY, Observable } from 'rxjs';
@@ -12,17 +12,6 @@ import { ActivatedRoute } from '@angular/router';
 export class GadgetsTempService {
   baseUrl = 'http://localhost:3001/gadgets_temp';
   id: number = 0;
-
-  gadgets_temp: GadgetsTemp = {
-    name: '',
-    time: null,
-    amount: null,
-    potency: null,
-    voltage: null,
-    amperage: null,
-    energy: null,
-    price: null,
-  };
 
   constructor(private snackBar: MatSnackBar, private http: HttpClient, private route: ActivatedRoute) {}
 
@@ -96,17 +85,6 @@ export class GadgetsTempService {
     return id <= 0 ? 0 : (this.id = id);
   }
 
-  public readByIdGadget(): GadgetsTemp {
-    if (this.id == 0 || this.id == undefined) {
-      console.log(`${this.id} ---->> ERRO DE ID`);
-    } else {
-      this.readById(this.id).subscribe((obj) => {
-        this.gadgets_temp = obj;
-      });
-    }
-    return this.gadgets_temp;
-  }
-
   public deleteGadget() {
     console.log(this.id);
     this.getIdObj(this.id) == 0
@@ -117,5 +95,36 @@ export class GadgetsTempService {
           console.log(`ID do ELSE -> ${this.id}`);
           this.showMessage('Produto excluído com sucesso');
         });
+  }
+
+  public updateGadget(gadgets: GadgetsTemp) {
+    this.calc(gadgets);
+
+    this.update(gadgets).subscribe(() => {
+      console.log(`ID do ELSE -> ${gadgets}`);
+      this.showMessage('Produto atualizado com sucesso');
+    });
+  }
+
+  energy: number = 0;
+
+  // <<----=============================#####=============================---->>
+  // Realiza a conversão do kWh para R$
+  calckWh(gadgets: GadgetsTemp): number {
+    return Math.round((this.energy = (gadgets.potency! * (gadgets.time! / 60)) / 1000));
+  }
+
+  // <<----=============================#####=============================---->>
+  // Realiza a conversão do kWh para R$
+  calc(gadgets: GadgetsTemp): void {
+    gadgets.energy = this.calckWh(gadgets);
+    if (gadgets.energy >= 100) {
+      gadgets.price = Math.round(gadgets.energy * 0.839 + 14.2);
+      console.log(`Energia 1 R$ ${gadgets.price}`);
+    } else {
+      gadgets.price = Math.round(this.calckWh(gadgets));
+      console.log(`Energia 2 R$ ${gadgets.price}`);
+    }
+    console.log(`Energia R$ ${gadgets.energy}`);
   }
 }

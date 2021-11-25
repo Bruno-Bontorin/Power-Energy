@@ -9,15 +9,12 @@ import { FormBuilder } from '@angular/forms';
 import { GadgetsService } from 'src/app/services/gadgets.service';
 import { DefaultService } from 'src/app/services/default.service';
 
-/**
- * @title Dialog with header, scrollable content and actions
- */
 @Component({
-  selector: 'app-dialog-component',
-  templateUrl: 'dialog-delete.component.html',
-  styleUrls: ['dialog-delete.component.scss'],
+  selector: 'app-dialog-edit',
+  templateUrl: './dialog-edit.component.html',
+  styleUrls: ['./dialog-edit.component.scss'],
 })
-export class DialogDeleteComponent implements OnInit {
+export class DialogEditComponent implements OnInit {
   @Input() getIdForTempTable: number | undefined;
 
   constructor(public dialog: MatDialog, private defaultService: DefaultService) {}
@@ -38,7 +35,7 @@ export class DialogDeleteComponent implements OnInit {
 
   openDialog() {
     this.defaultService.setId(this.getIdForTempTable!);
-    const dialogRef = this.dialog.open(DialogDeleteContentComponent);
+    const dialogRef = this.dialog.open(DialogEditContentComponent);
 
     dialogRef.afterClosed().subscribe((result) => {
       console.log(`Dialog result: ${result}`);
@@ -48,12 +45,12 @@ export class DialogDeleteComponent implements OnInit {
 }
 
 @Component({
-  selector: 'app-dialog-delete-content',
-  templateUrl: 'dialog-delete-content.component.html',
-  styleUrls: ['dialog-delete-content.component.scss'],
+  selector: 'app-dialog-edit-content',
+  templateUrl: 'dialog-edit-content.component.html',
+  styleUrls: ['dialog-edit-content.component.scss'],
 })
-export class DialogDeleteContentComponent extends ContentComponentForm {
-  title: string = 'Tem certeza que deseja deletar este aparelho?';
+export class DialogEditContentComponent extends ContentComponentForm {
+  title: string = 'Tem certeza que deseja alterar este aparelho?';
   affirmative: string = 'Confirmar';
   negative: string = 'Cancelar';
 
@@ -74,18 +71,10 @@ export class DialogDeleteContentComponent extends ContentComponentForm {
       this.readVoltageToGetId();
       console.log(`${this.gadgets_obj1.name} §§§§§§§§§ --->>> DIALOG`);
     });
-
-    this.gadgetsFormControl.disable();
-    this.gadgets?.disable();
-    this.potency?.disable();
-    this.amperage?.disable();
-    this.amount?.disable();
-    this.time?.disable();
-    this.voltage?.disable();
-    this.voltage?.disable();
   }
 
-  deleteGadget() {
-    this.gadgetsTempService.deleteGadget();
+  updateGadget() {
+    this.gadgets_obj1.id = this.defaultService.getId();
+    this.gadgetsTempService.updateGadget(this.gadgets_obj1);
   }
 }

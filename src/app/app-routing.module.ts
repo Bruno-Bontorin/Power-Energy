@@ -1,7 +1,9 @@
+import { DialogDeleteComponent } from './components/dialogs/dialog-delete/dialog-delete.component';
+import { ContentPyshicalComponent } from './components/content/content-pyshical/content-pyshical.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ContentComponentForm } from './components/content/content-form/content-form.component';
-import { DialogDeleteComponent } from './components/dialogs/dialog-delete/dialog-delete.component';
+import { DialogEditComponent } from './components/dialogs/dialog-edit/dialog-edit.component';
 
 const routes: Routes = [
   {
@@ -9,16 +11,24 @@ const routes: Routes = [
     component: ContentComponentForm,
   },
   {
-    path: 'gadgets/obj/:id',
+    path: 'calculate',
     component: ContentComponentForm,
+  },
+  {
+    path: 'gadgets/obj/:id',
+    redirectTo: '/calculate',
   },
   {
     path: 'gadgets_temp/update/:id',
-    component: ContentComponentForm,
+    redirectTo: '/calculate',
   },
   {
     path: 'gadgets_temp/delete/:id',
-    component: DialogDeleteComponent,
+    redirectTo: '/calculate',
+  },
+  {
+    path: 'concepts-physicals',
+    component: ContentPyshicalComponent,
   },
 ];
 

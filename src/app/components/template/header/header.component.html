@@ -1,17 +1,14 @@
 <mat-toolbar class="toolbar">
-  <a class="logo" mat-button>
+  <a class="logo" mat-button routerLink='./calculate'>
     <mat-icon>tungsten</mat-icon>
     <span> Power Energy </span>
   </a>
 
-  <mat-tab-group class="tabela" [disableRipple]="true" mat-align-tabs="center">
-    <mat-tab class="item1" label="Cálculo"></mat-tab>
-    <mat-tab class="item2" label="Conceitos Físicos"></mat-tab>
-  </mat-tab-group>
+<nav mat-tab-nav-bar>
+  <a mat-tab-link *ngFor="let link of navLinks" [routerLink]="link.link" routerLinkActive #rla="routerLinkActive" [active]='rla.isActive'>
+    <div> {{link.label}} </div>
+  </a>
+</nav>
 
-  <!-- <mat-tab-group [disableRipple]=true>
-    <mat-tab label="Git"></mat-tab>
-    <mat-tab label="Second"></mat-tab>
-    <mat-tab label="Third"></mat-tab>
-  </mat-tab-group> -->
 </mat-toolbar>
+<router-outlet></router-outlet>

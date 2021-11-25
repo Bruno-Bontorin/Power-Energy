@@ -60,7 +60,6 @@ export class ContentTableComponent implements AfterViewInit {
   public getIdObj(id: number) {
     this.gadgetsTempService.getIdObj(id);
     this.sendIdForTempTable = this.gadgetsTempService.getIdObj(id);
-    console.log(`${this.sendIdForTempTable} -------->>>>>>>>>>>>>>> ID ID ID ID IDS`);
   }
 
   ngAfterViewInit(): void {
