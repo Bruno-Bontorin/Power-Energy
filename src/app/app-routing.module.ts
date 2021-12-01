@@ -1,5 +1,5 @@
 import { DialogDeleteComponent } from './components/dialogs/dialog-delete/dialog-delete.component';
-import { ContentPyshicalComponent } from './components/content/content-pyshical/content-pyshical.component';
+import { PhysicsContentComponent } from './components/content/physics-content/physics-content.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ContentComponentForm } from './components/content/content-form/content-form.component';
@@ -27,8 +27,8 @@ const routes: Routes = [
     redirectTo: '/calculate',
   },
   {
-    path: 'concepts-physicals',
-    component: ContentPyshicalComponent,
+    path: 'physics_content',
+    component: PhysicsContentComponent,
   },
 ];
 

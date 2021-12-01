@@ -26,6 +26,7 @@ export class ContentTableComponent implements AfterViewInit {
 
   public sendIdForTempTable: number = 0;
   energy: number = 0;
+  price_all: number = 0;
 
   // Table
   displayedColumns = [

@@ -30,6 +30,7 @@ export class ContentComponentForm implements OnInit {
   title: string = 'Calcule o seu gasto elétrico através dos campos abaixo:';
 
   energy: number = 0;
+  price_all: number = 0;
 
   // Filtro autocomplete
   voltage_obj: Voltage[] = [];
@@ -249,10 +250,12 @@ export class ContentComponentForm implements OnInit {
   calc(): void {
     this.gadgets_obj1.energy = this.calckWh();
     if (this.gadgets_obj1.energy >= 100) {
-      this.gadgets_obj1.price = Math.round(this.gadgets_obj1.energy * 0.839 + 14.2);
+      this.gadgets_obj1.price = Math.round(this.gadgets_obj1.energy * 0.8361 + 14.2);
+      this.price_all += this.gadgets_obj1.price;
       console.log(`Energia 1 R$ ${this.gadgets_obj1.price}`);
     } else {
-      this.gadgets_obj1.price = Math.round(this.calckWh());
+      this.gadgets_obj1.price = Math.round(this.calckWh() * 0.8361);
+      this.price_all += this.gadgets_obj1.price;
       console.log(`Energia 2 R$ ${this.gadgets_obj1.price}`);
     }
     console.log(`Energia R$ ${this.gadgets_obj1.energy}`);

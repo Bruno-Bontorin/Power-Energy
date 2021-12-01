@@ -20,7 +20,7 @@ export class HeaderComponent {
       },
       {
         label: 'Conceitos Físicos',
-        link: './concepts-physicals',
+        link: './physics_content',
         index: 1,
       },
     ];
