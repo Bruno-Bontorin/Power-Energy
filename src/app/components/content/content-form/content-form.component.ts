@@ -241,7 +241,7 @@ export class ContentComponentForm implements OnInit {
 
   // <<----=============================#####=============================---->>
   // Realiza a consulta por obj -> price
-  getEnergy(): void {
+  getSumAllPrices(): void {
     this.price_all = 0;
     let a: number = 0;
     this.gadgetsTempService.read().subscribe((obj) => {
