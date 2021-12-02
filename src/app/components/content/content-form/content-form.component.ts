@@ -240,6 +240,22 @@ export class ContentComponentForm implements OnInit {
   }
 
   // <<----=============================#####=============================---->>
+  // Realiza a consulta por obj -> price
+  getEnergy(): void {
+    this.price_all = 0;
+    let a: number = 0;
+    this.gadgetsTempService.read().subscribe((obj) => {
+      obj.filter((gadget) => {
+        if (gadget === undefined) {
+        } else {
+          this.price_all += gadget.price!;
+          console.log(a);
+        }
+      });
+    });
+  }
+
+  // <<----=============================#####=============================---->>
   // Realiza a conversão do kWh para R$
   calckWh(): number {
     return Math.round((this.energy = (this.gadgets_obj1.potency! * (this.gadgets_obj1.time! / 60)) / 1000));

@@ -89,13 +89,13 @@
   </form>
 </div>
 
-
 <!-- Cálculo -->
 <mat-card style="margin: 25px">
   <mat-card-title>Gasto de Energia Elétrica</mat-card-title>
   <mat-card-subtitle>Resultado Total: {{ price_all | currency: 'BRL':true}}</mat-card-subtitle>
   <mat-card-actions>
     <button mat-raised-button color="primary" [disabled]="isDisabled()" (click)="createObjInTempTable()">Adicionar objeto</button>
+    <button mat-raised-button color="primary" (click)="getEnergy()"> Calcular Valor Total </button>
     <!-- <button mat-raised-button color="primary" (click)="refreshTable()">Atualizar</button> -->
   </mat-card-actions>
 </mat-card>
