@@ -61,6 +61,12 @@ export class ContentTableDataSource extends DataSource<GadgetsTemp> {
           return compare(+a.potency!, +b.potency!, isAsc);
         case 'amperage':
           return compare(+a.amperage!, +b.amperage!, isAsc);
+        case 'energy':
+          return compare(+a.energy!, +b.energy!, isAsc);
+        case 'price':
+          return compare(+a.price!, +b.price!, isAsc);
+        case 'voltage':
+          return compare(+a.voltage!, +b.voltage!, isAsc);
         default:
           return 0;
       }

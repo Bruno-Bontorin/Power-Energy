@@ -118,13 +118,7 @@ export class GadgetsTempService {
   // Realiza a conversão do kWh para R$
   calc(gadgets: GadgetsTemp): void {
     gadgets.energy = this.calckWh(gadgets);
-    if (gadgets.energy >= 100) {
-      gadgets.price = Math.round(gadgets.energy * 0.839 + 14.2);
-      console.log(`Energia 1 R$ ${gadgets.price}`);
-    } else {
-      gadgets.price = Math.round(this.calckWh(gadgets));
-      console.log(`Energia 2 R$ ${gadgets.price}`);
-    }
-    console.log(`Energia R$ ${gadgets.energy}`);
+    gadgets.price = this.calckWh(gadgets) * 0.8361 * gadgets.amount!;
+    console.log(`Energia R$ ${gadgets.price}`);
   }
 }

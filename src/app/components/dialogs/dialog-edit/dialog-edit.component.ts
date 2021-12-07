@@ -77,4 +77,8 @@ export class DialogEditContentComponent extends ContentComponentForm {
     this.gadgets_obj1.id = this.defaultService.getId();
     this.gadgetsTempService.updateGadget(this.gadgets_obj1);
   }
+
+  isDisabled(): boolean {
+    return !this.form.valid ? true : !this.gadgetsFormControl.valid ? true : false;
+  }
 }

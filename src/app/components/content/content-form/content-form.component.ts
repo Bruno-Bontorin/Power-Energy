@@ -10,6 +10,7 @@ import { GadgetsService } from 'src/app/services/gadgets.service';
 import { GadgetsTempService } from 'src/app/services/gadgets-temp.service';
 import { ContentTableComponent } from '../content-table/content-table.component';
 import { ErrorStateMatcher } from '@angular/material/core';
+import { __spreadArray } from 'tslib';
 
 /** Error when invalid control is dirty, touched, or submitted. */
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -30,6 +31,7 @@ export class ContentComponentForm implements OnInit {
   title: string = 'Calcule o seu gasto elétrico através dos campos abaixo:';
 
   energy: number = 0;
+  price_all: number = 0;
 
   // Filtro autocomplete
   voltage_obj: Voltage[] = [];
@@ -154,11 +156,84 @@ export class ContentComponentForm implements OnInit {
     this.gadgets_custom.energy = this.gadgets_obj1.energy;
     this.gadgets_custom.price = this.gadgets_obj1.price;
     this.gadgetsTempService.create(this.gadgets_custom).subscribe(() => {
-      this.refreshTableForm();
       this.onSubmit();
       this.gadgetsTempService.showMessage('Aparelho Criado...');
+      this.refreshTableForm();
     });
   }
+
+  // verifyAmount(): void {
+  //   let tinyInt: number[] = [];
+  //   let allAmount: number[] = [];
+  //   let index: number = 0;
+  //   this.gadgetsTempService.read().subscribe((data) => {
+  //     data.filter((obj) => {
+  //       if (
+  //         obj.name === this.gadgets_custom.name &&
+  //         obj.time === this.gadgets_custom.time &&
+  //         obj.potency === this.gadgets_custom.potency &&
+  //         obj.voltage === this.gadgets_custom.voltage &&
+  //         obj.amperage === this.gadgets_custom.amperage
+  //       ) {
+  //         allAmount[index] = obj.amount!;
+  //         tinyInt[index] = obj.id!;
+  //         index++;
+  //       }
+  //     });
+  //     if (!isNaN(tinyInt[0]) && !isNaN(tinyInt[1]) && tinyInt[1] > 0) {
+  //       this.gadgets_obj1.id = tinyInt[0];
+  //       this.gadgets_obj1.amount = allAmount.reduce(
+  //         (total, currentElement) => Number(total) + Number(currentElement)
+  //       );
+  //       // console.log(...tinyInt);
+  //       this.deleteGadgets(tinyInt[1]);
+  //       this.deleteGadgets(tinyInt[2]);
+  //       this.updateGadgets(this.gadgets_obj1);
+  //     }
+  //   });
+  // }
+
+  // updateGadgets(gadget: GadgetsTemp): void {
+  //   setTimeout(() => {
+  //     this.gadgetsTempService.update(gadget).subscribe(() => {
+  //       console.log(`ID do ELSE -> ${gadget.id}`);
+  //       this.refreshTableForm();
+  //     });
+  //   }, 0);
+  // }
+
+  // deleteGadgets(id: number): void {
+  //   setTimeout(() => {
+  //     this.gadgetsTempService.delete(`${id}`).subscribe(() => {
+  //       console.log(`ID DELETE FUNCTION -> ${id}`);
+  //       this.refreshTableForm();
+  //     });
+  //   }, 100);
+  // }
+
+  // condition != 0
+  // ? console.log(`Deu ruim`)
+  // : this.gadgetsTempService.delete(`${tinyInt}`).subscribe(() => {
+  //     console.log(`ID do ELSE -> ${obj.id}`);
+  //     this.gadgetsTempService.showMessage('Produto excluído com sucesso');
+  //   });
+
+  // updateGadget() {
+  //   this.gadgets_obj1.id = this.defaultService.getId();
+
+  // }
+
+  // verifyAmount(): void {
+  //   this.gadgetsTempService.read().subscribe((array) => {
+  //     array.filter((obj) => {
+  //       if(obj.amount! === this.gadgets_custom.amount) {
+  //         this.gadgets_custom.amount += obj.amount!;
+  //         this.gadgetsTempService.deleteGadget();
+  //         this.createObjInTempTable();
+  //       }
+  //     });
+  //   })
+  // }
 
   // <<----=============================#####=============================---->>
   // Leitura do obj Voltage para obter IDs
@@ -239,6 +314,22 @@ export class ContentComponentForm implements OnInit {
   }
 
   // <<----=============================#####=============================---->>
+  // Realiza a consulta por obj -> price
+  getSumAllPrices(): void {
+    this.price_all = 0;
+    let a: number = 0;
+    this.gadgetsTempService.read().subscribe((obj) => {
+      obj.filter((gadget) => {
+        if (gadget === undefined) {
+        } else {
+          this.price_all += gadget.price!;
+          console.log(a);
+        }
+      });
+    });
+  }
+
+  // <<----=============================#####=============================---->>
   // Realiza a conversão do kWh para R$
   calckWh(): number {
     return Math.round((this.energy = (this.gadgets_obj1.potency! * (this.gadgets_obj1.time! / 60)) / 1000));
@@ -248,14 +339,9 @@ export class ContentComponentForm implements OnInit {
   // Realiza a conversão do kWh para R$
   calc(): void {
     this.gadgets_obj1.energy = this.calckWh();
-    if (this.gadgets_obj1.energy >= 100) {
-      this.gadgets_obj1.price = Math.round(this.gadgets_obj1.energy * 0.839 + 14.2);
-      console.log(`Energia 1 R$ ${this.gadgets_obj1.price}`);
-    } else {
-      this.gadgets_obj1.price = Math.round(this.calckWh());
-      console.log(`Energia 2 R$ ${this.gadgets_obj1.price}`);
-    }
-    console.log(`Energia R$ ${this.gadgets_obj1.energy}`);
+    this.gadgets_obj1.price = this.calckWh() * 0.8361 * this.gadgets_obj1.amount!;
+    this.price_all += this.gadgets_obj1.price;
+    console.log(`Energia R$ ${this.gadgets_obj1.price}`);
   }
 
   // <<----=============================#####=============================---->>

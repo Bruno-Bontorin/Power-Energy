@@ -1,0 +1,24 @@
+.cards {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  margin: 16px;
+}
+
+.card {
+  width: 30%;
+}
+
+.title {
+  text-align: center;
+  margin: 16px;
+}
+
+.content {
+  display: -webkit-box;
+  text-align: justify;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  // -webkit-line-clamp: 3; /** número de linhas para exibir */
+  -webkit-box-orient: vertical;
+}
