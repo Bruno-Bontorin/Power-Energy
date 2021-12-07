@@ -67,6 +67,7 @@ export class ContentTableComponent implements AfterViewInit {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
     this.table.dataSource = this.dataSource;
+    this.dataSource.paginator._intl.itemsPerPageLabel = 'Itens por página:';
   }
 
   public refreshTable(): void {

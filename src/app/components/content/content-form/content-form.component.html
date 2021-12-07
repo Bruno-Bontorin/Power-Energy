@@ -14,9 +14,8 @@
       </mat-error>
       <mat-autocomplete #auto="matAutocomplete">
         <mat-option *ngFor="let obj of filteredOptions | async" [value]="obj.name" (click)="link(obj.id)">
-          <a routerLink="/gadgets/obj/{{ obj.id }}">
+          <a class='link' routerLink="/gadgets/obj/{{ obj.id }}">
             {{ obj.name }}
-            {{ obj.id }}
           </a>
         </mat-option>
       </mat-autocomplete>

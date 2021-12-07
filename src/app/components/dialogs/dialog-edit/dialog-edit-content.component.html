@@ -13,9 +13,8 @@
         </mat-error>
         <mat-autocomplete #auto="matAutocomplete">
           <mat-option *ngFor="let obj of filteredOptions | async" [value]="obj.name" (click)="link(obj.id)">
-            <a routerLink="/gadgets/obj/{{ obj.id }}">
+            <a class='link' routerLink="/gadgets/obj/{{ obj.id }}">
               {{ obj.name }}
-              {{ obj.id }}
             </a>
           </mat-option>
         </mat-autocomplete>
@@ -91,5 +90,5 @@
 </mat-dialog-content>
 <mat-dialog-actions style='justify-content: flex-end;'>
   <button mat-button mat-dialog-close>{{ negative }}</button>
-  <button mat-button [mat-dialog-close]="true" cdkFocusInitial (click)="updateGadget()">{{ affirmative }}</button>
+  <button mat-button [disabled]='isDisabled()' [mat-dialog-close]="true" cdkFocusInitial (click)="updateGadget()">{{ affirmative }}</button>
 </mat-dialog-actions>

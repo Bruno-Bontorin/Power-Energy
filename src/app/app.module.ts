@@ -35,7 +35,7 @@ import {
   DialogEditComponent,
   DialogEditContentComponent,
 } from './components/dialogs/dialog-edit/dialog-edit.component';
-import { PhysicsContentComponent } from './components/content/physics-content/physics-content.component';
+import { ContentPhysicsComponent } from './components/content/content-physics/content-physics.component';
 
 registerLocaleData(localePt);
 
@@ -50,7 +50,7 @@ registerLocaleData(localePt);
     DialogDeleteContentComponent,
     DialogEditComponent,
     DialogEditContentComponent,
-    PhysicsContentComponent,
+    ContentPhysicsComponent,
   ],
   imports: [
     BrowserModule,
